@@ -49,5 +49,26 @@ public class UserDaoImpl implements UserDao {
         }
         return true;
     }
+    
+    @Override
+    public User findByUsername(String username) {
+
+        String sql = "SELECT * FROM user "
+                   + "WHERE username = ? ";
+        User user = null;
+        try {
+            user = db.queryForObject(sql,
+                   new Object[]{username},
+                   new UserRowMapper());
+            
+        } catch (DataAccessException ex) {
+            //user not found
+            return null;
+
+        }
+        
+        return user;
+        
+    }
 
 }

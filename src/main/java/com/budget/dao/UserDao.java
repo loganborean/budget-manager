@@ -6,4 +6,6 @@ public interface UserDao {
     
     public boolean userExists(User user);
 
+    User findByUsername(String username);
+
 }

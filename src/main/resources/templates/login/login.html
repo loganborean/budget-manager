@@ -19,6 +19,20 @@
                     <h3 class="panel-title">Please sign in</h3>
                 </div>
                 <div class="panel-body">
+                    <form role="form" action="#" th:action="@{/j_spring_security_check}" method="POST">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Username" name="username" type="text"/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password" value=""/>
+                            </div>
+                            <input class="btn btn-lg btn-success btn-block" type="submit" name="submit" value="Login"/>
+                            <label> Dont have an accout?</label>
+                            <a th:href="@{/signup}">Sign up</a>
+                        </fieldset>
+                    </form>
+                <!-- 
                     <form role="form" action="#" th:action="@{/login}" th:object="${userForm}" method="POST">
                         <fieldset>
                             <div class="form-group">
@@ -32,6 +46,7 @@
                             <a th:href="@{/signup}">Sign up</a>
                         </fieldset>
                     </form>
+ -->
                 </div>
             </div>
         </div>
