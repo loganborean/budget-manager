@@ -1,16 +1,23 @@
 package com.budget.validators;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import com.budget.entity.CreateUser;
 import com.budget.entity.User;
+import com.budget.service.AuthenticationService;
+import com.budget.service.UserService;
 
 @Component
 @Qualifier("signupValid")
 public class SignupValidator implements Validator {
+    
+    @Autowired
+    private AuthenticationService authService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -40,6 +47,21 @@ public class SignupValidator implements Validator {
                     "password must be between 4 and 20 characters");
         }
         
+        if (usernameExists(username)) {
+            errors.reject("existingUsername",
+                    "That username already exists");
+        }
+        
+    }
+    
+    private boolean usernameExists(String username) {
+        try {
+            authService.loadUserByUsername(username);
+            
+        } catch (UsernameNotFoundException ex) {
+            return false;
+        }
+        return true;
     }
 
 }

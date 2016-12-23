@@ -16,34 +16,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.budget.entity.CreateUser;
 import com.budget.entity.User;
+import com.budget.service.UserService;
 
 @Controller
 public class PagesController {
 
     @Autowired @Qualifier("signupValid")
     private Validator signupValidator;
-
-    @Autowired @Qualifier("credValid")
-    private Validator credentialsValidator;
+    
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = {"/login", "/"})
     public String loginForm(Model model) {
-        User user = new User();
-        model.addAttribute("userForm", user);
+//        User user = new User();
+//        model.addAttribute("userForm", user);
 
         return "login/login";
-    }
-
-    @PostMapping(value = {"/login", "/"})
-    public String loginSubmit(@ModelAttribute("userForm") User user,
-                              BindingResult result) {
-        credentialsValidator.validate(user, result);
-        if (result.hasErrors()) {
-            return "login/login";
-        }
-
-        return "redirect:/budget";
-        
     }
 
     @GetMapping(value = "/signup")
@@ -60,9 +49,16 @@ public class PagesController {
         if (result.hasErrors()) {
             return "login/signup";
         }
+        userService.registerUser(user);
 
-        return "redirect:/budget";
+        return "redirect:/login?signup";
         
+    }
+
+    @GetMapping(value = "/error")
+    public String signupSubmit() {
+
+        return "OOPS something went wrong";
     }
     
     

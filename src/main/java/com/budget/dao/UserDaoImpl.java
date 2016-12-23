@@ -17,7 +17,7 @@ import com.budget.entity.User;
 public class UserDaoImpl implements UserDao {
     
     @Autowired
-    private JdbcTemplate db;
+    private JdbcTemplate jdbcTemp;
     
     private static class UserRowMapper implements RowMapper<User> {
         
@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
             user.setPassword(resultSet.getString("password"));
             return user;
         }
-        
+
     }
     
     
@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
                    + "WHERE username = ? "
                    + "AND password = ? ";
         try {
-            User user = db.queryForObject(sql,
+            User user = jdbcTemp.queryForObject(sql,
                         new Object[]{userToVerify.getUsername(),
                                      userToVerify.getPassword()},
                         new UserRowMapper());
@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
                    + "WHERE username = ? ";
         User user = null;
         try {
-            user = db.queryForObject(sql,
+            user = jdbcTemp.queryForObject(sql,
                    new Object[]{username},
                    new UserRowMapper());
             
@@ -69,6 +69,18 @@ public class UserDaoImpl implements UserDao {
         
         return user;
         
+    }
+
+    @Override
+    public void insertUser(User user) {
+        String sql = "INSERT INTO user (username, password) "
+                   + " values (?, ?)";
+        try {
+            jdbcTemp.update(sql, new Object[]{user.getUsername(),
+                                              user.getPassword()});
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

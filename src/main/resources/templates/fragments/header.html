@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="header">
+
+<div th:fragment="unauthenticated">
 <div id="wrapper">
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <!-- /.navbar-header -->
         <div class="container-fluid">
             <div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/}">Budget Manger</a>
-        <!-- /.navbar-header 
-                <?php if(Session::get('loggedin')) : ?>
-                    <a class="navbar-brand" href="/budget/index">Budget Manger</a>
-                <?php else : ?>
-                    <a class="navbar-brand" href="/pages/login">Budget Manager</a>
-                <?php endif ?>
--->
+				<a class="navbar-brand" th:href="@{/login}">Budget Manger</a>
+            </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/signup}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+        </div>
+    </nav>
+    <!-- /#page-wrapper -->
+</div>
+</div>
+
+
+<div th:fragment="authenticated">
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- /.navbar-header -->
+        <div class="container-fluid">
+            <div class="navbar-header">
+				<a class="navbar-brand" th:href="@{/budget}">Budget Manger</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Budget</a></li>
+                <li class="active"><a th:href="@{/budget}">Budget</a></li>
                 <li><a href="#">Tracking</a></li>
                 <li><a href="#">Analysis</a></li>
             </ul>
-<!--
-            <?php if(Session::get('loggedin')) : ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/pages/logoutAction"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
                 </ul>
--->
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/pages/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/pages/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                </ul>
-<!--
-            <?php else : ?>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/pages/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/pages/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                </ul>
-            <?php endif ?>
-  -->
         </div>
     </nav>
     <!-- /#page-wrapper -->

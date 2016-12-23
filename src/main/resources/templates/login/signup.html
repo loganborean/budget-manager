@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/head::head"></div>
 <body>
-<div th:replace="fragments/header::header"></div>
+<div th:replace="fragments/header::unauthenticated"></div>
 <div th:replace="fragments/title::title('Sign Up')"></div>
 
 
@@ -10,10 +10,12 @@
     <div class="row vertical-offset-100">
         <div class="col-md-6 col-md-offset-3">
 			<div th:if="${#fields.hasErrors('${signupForm.*}')}">
-				<ul class="bg-danger">
-				  <li th:each="err : ${#fields.errors('${signupForm.*}')}" 
-					  th:text="${err}" >Input is incorrect</li>
+				<div class="alert alert-danger" role="alert">
+					<ul class="bg-danger">
+					  <li th:each="err : ${#fields.errors('${signupForm.*}')}" 
+						  th:text="${err}" >Input is incorrect</li>
 				</ul>
+				</div>
 			</div>
             <div class="panel panel-default">
                 <div class="panel-heading">
