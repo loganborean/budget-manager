@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head::head"></div>
+<body>
+	<div th:replace="fragments/header::authenticated"></div>
+	<div class="container">
+		<div th:replace="fragments/summary::summary('Create Category')"></div>
+
+			<div th:if="${#fields.hasErrors('${createCategoryForm.*}')}">
+				<div class="alert alert-danger" role="alert">
+					<ul class="bg-danger">
+					  <li th:each="err : ${#fields.errors('${createCategoryForm.*}')}" 
+						  th:text="${err}" >Input is incorrect</li>
+				</ul>
+				</div>
+			</div>
+		<br />
+		<form class="form-inline" role="form" action="#" 
+		      th:action="@{/category/create}" th:object="${createCategoryForm}" method="POST">
+			<div class="form-group">
+				<label for="category">Category Name </label>
+				<input type="text" class="form-control" th:field="*{name}" 
+				       placeholder="e.g. rent"/>
+			</div>
+			<button type="submit" class="btn btn-primary">+ Create</button>
+		</form>
+		<a th:href="@{/budget/create}">
+			<button style="margin-top: 30px" class="btn btn-md btn-danger">
+			    Cancel
+			</button>
+		</a>
+
+	</div>
+</body>
+</html>

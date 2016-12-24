@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head::head"></div>
+<body>
+	<div th:replace="fragments/header::authenticated"></div>
+	<div class="container">
+		<div th:replace="fragments/summary::summary('Create Budget')"></div>
+		<br/>
+		<form role="form" action="#" th:action="@{/budget/create}" th:object="${createBudgetForm}" method="POST">
+			<fieldset>
+				<div class="col-xs-5" style="padding-left: 0px;">
+					<div class="form-group">
+						<label for="category">Category</label>
+						<select
+							class="form-control" name="category">
+							<!--                selected from db-->
+							<!--<?php foreach($data['categories'] as $category): ?> -->
+							<option>options</option>
+							<!--   <?php endforeach; ?> -->
+						</select>
+					</div>
+					<a th:href="@{/category/create}">
+						<button type="button" class="btn btn-md btn-info">+
+							Create Category
+						</button>
+					</a>
+				</div>
+				<div class="col-md-7">
+					<div class="form-group">
+						<label for="amount">Amount</label>
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control"
+								   th:field="*{amount}" placeholder="amount"/>
+						</div>
+					</div>
+					<div class="pull-left">
+						<input class="btn btn-lg btn-success" type="submit"
+							value="+ Create"/>
+					</div>
+					<div class="pull-right">
+						<a th:href="@{/budget}"><button type="button"
+								class="btn btn-lg btn-danger" value="Cancel">Cancel</button></a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+
+
+	</div>
+</body>
+</html>

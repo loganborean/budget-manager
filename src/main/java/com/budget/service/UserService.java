@@ -11,21 +11,15 @@ import com.budget.entity.User;
 @Service
 public class UserService {
     
-    @Autowired
-    @Qualifier("MySql")
+    @Autowired @Qualifier("MySql")
     private UserDao userDao;
     
     public boolean isValidUser(User user) {
-        if (userDao.userExists(user)) {
-            return true;
-        }
-        return false;
-        
+        return userDao.userExists(user);
     }
 
     public void registerUser(User user) {
         userDao.insertUser(user);
-        
     }
 
 }

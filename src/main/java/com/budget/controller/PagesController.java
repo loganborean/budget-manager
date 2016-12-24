@@ -29,9 +29,6 @@ public class PagesController {
 
     @GetMapping(value = {"/login", "/"})
     public String loginForm(Model model) {
-//        User user = new User();
-//        model.addAttribute("userForm", user);
-
         return "login/login";
     }
 
