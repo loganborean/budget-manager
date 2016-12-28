@@ -22,7 +22,7 @@ public class CategoryDaoImpl implements CategoryDao {
     @Autowired
     private JdbcTemplate jdbcTemp;
     
-    private static class CategoryRowMapper implements RowMapper<Category> {
+    static class CategoryRowMapper implements RowMapper<Category> {
         
         @Override
         public Category mapRow(ResultSet resultSet, int i) throws SQLException {
@@ -71,14 +71,12 @@ public class CategoryDaoImpl implements CategoryDao {
         String sql = "SELECT * FROM category "
                    + " WHERE id = ? ";
         Category category = null;
-        System.out.println("id: " + id);
         try {
             category = jdbcTemp.queryForObject(sql,
                             new Object[]{id},
                             new CategoryRowMapper());
             
         } catch (DataAccessException ex) {
-            System.out.println("returning null");
             return null;
         }
         return category;

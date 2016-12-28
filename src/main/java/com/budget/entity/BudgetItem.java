@@ -6,7 +6,7 @@ public class BudgetItem {
 
     private int id;
     private int user_id;
-    private int category_id;
+    private Category category;
     private double amount;
     private Date time;
 
@@ -22,12 +22,7 @@ public class BudgetItem {
     public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
-    public int getCategory_id() {
-        return category_id;
-    }
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
-    }
+
     public double getAmount() {
         return amount;
     }
@@ -39,6 +34,12 @@ public class BudgetItem {
     }
     public void setTime(Date time) {
         this.time = time;
+    }
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
 }

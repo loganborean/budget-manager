@@ -24,7 +24,7 @@
 				<div class="col-xs-5" style="padding-left: 0px;">
 					<div class="form-group">
 						<label for="category">Category</label>
-						<select class="form-control" th:field="*{category_id}">
+						<select class="form-control" th:field="*{category.id}">
 							<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">category
 							</option>
 						</select>

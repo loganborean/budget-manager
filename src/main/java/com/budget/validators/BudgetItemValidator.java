@@ -29,8 +29,7 @@ public class BudgetItemValidator implements Validator {
     public void validate(Object arg, Errors errors) {
         BudgetItem budgetItem = (BudgetItem) arg;
         
-        if (budgetService.hasBudgetedForCategory(
-                categoryService.getCategoryById(budgetItem.getCategory_id()))
+        if (budgetService.hasBudgetedForCategory(budgetItem.getCategory())
                                                  ) {
             errors.reject("alreadyBudgeted",
                     "You have already budgeted for that category");

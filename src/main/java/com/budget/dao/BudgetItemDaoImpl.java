@@ -23,17 +23,31 @@ public class BudgetItemDaoImpl implements BudgetItemDao {
     @Autowired
     private JdbcTemplate jdbcTemp;
     
-    private static class BudgetItemRowMapper implements RowMapper<BudgetItem> {
+    private class BudgetItemRowMapper implements RowMapper<BudgetItem> {
         
         @Override
         public BudgetItem mapRow(ResultSet resultSet, int i) throws SQLException {
             BudgetItem budgetItem = new BudgetItem();
             budgetItem.setId(resultSet.getInt("id"));
             budgetItem.setUser_id(resultSet.getInt("user_id"));
-            budgetItem.setCategory_id(resultSet.getInt("category_id"));
+            budgetItem.setCategory(mapCategoryById((resultSet.getInt("category_id"))));
             budgetItem.setAmount(resultSet.getDouble("amount"));
             budgetItem.setTime(resultSet.getTime("time"));
             return budgetItem;
+        }
+        
+        public Category mapCategoryById(int id) {
+            String sql = "SELECT * FROM category "
+                       + " WHERE id = ? ";
+            Category category = null;
+            try {
+                category = jdbcTemp.queryForObject(sql,
+                                new Object[]{id}, new CategoryDaoImpl.CategoryRowMapper());
+                
+            } catch (DataAccessException ex) {
+                return null;
+            }
+            return category;
         }
     }
 
@@ -59,7 +73,7 @@ public class BudgetItemDaoImpl implements BudgetItemDao {
                    + " values (?, ?, ?)";
         try {
             jdbcTemp.update(sql, new Object[]{item.getUser_id(),
-                                              item.getCategory_id(),
+                                              item.getCategory().getId(),
                                               item.getAmount()});
         } catch (DataAccessException ex) {
             ex.printStackTrace();

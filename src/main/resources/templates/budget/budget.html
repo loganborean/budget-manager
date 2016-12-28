@@ -11,12 +11,16 @@
 					value="+ Create Item"/>
 			</fieldset>
 		</form>
+		<br/>
+        <div th:if="${param.budgetItemCreated}">
+			<div class="alert alert-info" role="alert">
+			     Budget Item Created
+			</div>
+        </div>
 		
 		
-		<!--  -->
 		<div th:each="budgetItem : ${budgetItems}">
-		<p th:text="${budgetItem.name}" style="font-size: 30px; float: left">
-		
+		<p th:text="${budgetItem.category.name}" style="font-size: 30px; float: left">
 		  Item name
 		</p>
 		<a href="/budget/edit/1"><button type="button"
@@ -29,8 +33,7 @@
 				<span class="glyphicon glyphicon-remove"></span> Remove
 			</button></a>
 		<p style="font-size: 25px; font-style: italic; float: right">
-			$0 of $
-			2346969
+			$0 of <span th:text="${budgetItem.amount}">thing</span>
 		</p>
 		<div class="progress progress-striped active" style="clear: both">
 			<div class="progress-bar progress-bar-success" role="progressbar"
@@ -38,7 +41,6 @@
 				style="width: 80%">asdf</div>
 		</div>
 </div>
-		<!--  -->
 
 
 
