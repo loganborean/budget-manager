@@ -2,6 +2,8 @@ package com.budget.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.budget.entity.Category;
+import com.budget.entity.User;
 
 @Repository
 @Qualifier("MySql")
@@ -23,11 +26,11 @@ public class CategoryDaoImpl implements CategoryDao {
         
         @Override
         public Category mapRow(ResultSet resultSet, int i) throws SQLException {
-            Category user = new Category();
-            user.setId(resultSet.getInt("id"));
-            user.setUser_id(resultSet.getInt("user_id"));
-            user.setName(resultSet.getString("name"));
-            return user;
+            Category category = new Category();
+            category.setId(resultSet.getInt("id"));
+            category.setUser_id(resultSet.getInt("user_id"));
+            category.setName(resultSet.getString("name"));
+            return category;
         }
     }
 
@@ -37,16 +40,63 @@ public class CategoryDaoImpl implements CategoryDao {
                    + " WHERE user_id = ? "
                    + " AND name = ? ";
         try {
-            Category cat =  jdbcTemp.queryForObject(sql,
-                            new Object[]{categoryToFind.getName(),
-                                         categoryToFind.getUser_id()},
-                            new CategoryRowMapper());
+            jdbcTemp.queryForObject(sql,
+                    new Object[]{categoryToFind.getUser_id(),
+                                 categoryToFind.getName()},
+                    new CategoryRowMapper());
             
         } catch (DataAccessException ex) {
             return false;
         }
         return true;
 
+        
+    }
+
+    @Override
+    public void insertCategory(Category category) {
+        String sql = "INSERT INTO category (user_id, name) "
+                   + " values (?, ?)";
+        try {
+            jdbcTemp.update(sql, new Object[]{category.getUser_id(),
+                                              category.getName()});
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
+    @Override
+    public Category getCategoryById(int id) {
+        String sql = "SELECT * FROM category "
+                   + " WHERE id = ? ";
+        Category category = null;
+        System.out.println("id: " + id);
+        try {
+            category = jdbcTemp.queryForObject(sql,
+                            new Object[]{id},
+                            new CategoryRowMapper());
+            
+        } catch (DataAccessException ex) {
+            System.out.println("returning null");
+            return null;
+        }
+        return category;
+    }
+    @Override
+    public List<Category> getAllCategoriesForUser(User user) {
+        String sql = "SELECT * FROM category "
+                   + " WHERE user_id = ? ";
+        List<Category> categories = null;
+        try {
+            categories = jdbcTemp.query(sql,
+                         new Object[]{user.getId()},
+                         new CategoryRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return new ArrayList<Category>();
+        }
+        return categories;
         
     }
 

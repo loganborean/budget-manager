@@ -6,17 +6,27 @@
 	<div class="container">
 		<div th:replace="fragments/summary::summary('Create Budget')"></div>
 		<br/>
+        <div th:if="${param.categoryInsert}">
+			<div class="alert alert-info alert-dismissible fade in" role="alert">
+			     Category Inserted
+			</div>
+        </div>
+		<div th:if="${#fields.hasErrors('${createBudgetForm.*}')}">
+			<div class="alert alert-danger" role="alert">
+				<ul class="bg-danger">
+				  <li th:each="err : ${#fields.errors('${createBudgetForm.*}')}" 
+					  th:text="${err}" >Input is incorrect</li>
+			</ul>
+			</div>
+		</div>
 		<form role="form" action="#" th:action="@{/budget/create}" th:object="${createBudgetForm}" method="POST">
 			<fieldset>
 				<div class="col-xs-5" style="padding-left: 0px;">
 					<div class="form-group">
 						<label for="category">Category</label>
-						<select
-							class="form-control" name="category">
-							<!--                selected from db-->
-							<!--<?php foreach($data['categories'] as $category): ?> -->
-							<option>options</option>
-							<!--   <?php endforeach; ?> -->
+						<select class="form-control" th:field="*{category_id}">
+							<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">category
+							</option>
 						</select>
 					</div>
 					<a th:href="@{/category/create}">

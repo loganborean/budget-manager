@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.budget.entity.Category;
+import com.budget.service.CategoryService;
 
 @Controller
 public class CategoryController {
     
     @Autowired @Qualifier("categoryValidator")
     Validator categoryValidator; 
+
+    @Autowired
+    CategoryService categoryService; 
 
     @GetMapping(value = {"/category/create"})
     public String createCategoryForm(Model model) {
@@ -33,8 +37,9 @@ public class CategoryController {
         if (result.hasErrors()) {
             return "budget/createCategory";
         }
+        categoryService.createCategory(category);
 
-        return "budget/createCategory";
+        return "redirect:/budget/create?categoryInsert";
     }
 
 }

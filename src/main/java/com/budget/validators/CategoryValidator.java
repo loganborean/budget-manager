@@ -42,9 +42,8 @@ public class CategoryValidator implements Validator {
         category.setUser_id(user.getId());
         
         if (categoryService.categoryExists(category)) {
-            System.out.println("refjing");
             errors.reject("categoryExists",
-                    "You already have that cateogry");
+                    "You already have that category");
         }
 
         

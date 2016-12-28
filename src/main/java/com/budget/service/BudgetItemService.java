@@ -6,39 +6,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.budget.dao.CategoryDao;
+import com.budget.dao.BudgetItemDao;
+import com.budget.entity.BudgetItem;
 import com.budget.entity.Category;
 import com.budget.entity.User;
 import com.budget.utils.CurrentUserUtils;
 
 @Service
-public class CategoryService {
+public class BudgetItemService {
     
     @Autowired @Qualifier("MySql")
-    CategoryDao categoryDao;
+    BudgetItemDao budgetDao;
 
     @Autowired
     CurrentUserUtils currentUserFinder;
 
-    public boolean categoryExists(Category category) {
-        return categoryDao.categoryExists(category);
+    public boolean hasBudgetedForCategory(Category category) {
+        return budgetDao.budgetForCategoryExists(category);
     }
     
-    public void createCategory(Category category) {
+    public void createBudgetItem(BudgetItem item) {
         User user = currentUserFinder.getCurrentUser();
-        category.setUser_id(user.getId());
+        item.setUser_id(user.getId());
+        
+        budgetDao.insertBudgetItem(item);
+    }
 
-        categoryDao.insertCategory(category);
+    public List<BudgetItem> getAllBudgetItems() {
+        User user = currentUserFinder.getCurrentUser();
+
+        return budgetDao.getAllBudgetItemsForUser(user);
     }
     
-    public Category getCategoryById(int id) {
-        return categoryDao.getCategoryById(id);
-    }
-
-    public List<Category> getAllCategories() {
-        User user = currentUserFinder.getCurrentUser();
-
-        return categoryDao.getAllCategoriesForUser(user);
-    }
 
 }
