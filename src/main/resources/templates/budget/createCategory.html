@@ -7,11 +7,14 @@
 		<div th:replace="fragments/summary::summary('Create Category')"></div>
 
 			<div th:if="${#fields.hasErrors('${createCategoryForm.*}')}">
-				<div class="alert alert-danger" role="alert">
+				<div class="alert alert-danger alert-dismissable" role="alert">
+					 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					 </button>
 					<ul class="bg-danger">
 					  <li th:each="err : ${#fields.errors('${createCategoryForm.*}')}" 
 						  th:text="${err}" >Input is incorrect</li>
-				</ul>
+					</ul>
 				</div>
 			</div>
 		<br />

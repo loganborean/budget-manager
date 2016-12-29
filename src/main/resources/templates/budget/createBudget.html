@@ -7,16 +7,22 @@
 		<div th:replace="fragments/summary::summary('Create Budget')"></div>
 		<br/>
         <div th:if="${param.categoryInsert}">
-			<div class="alert alert-info alert-dismissible fade in" role="alert">
+			<div class="alert alert-info alert-dismissible" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				 </button>
 			     Category Inserted
 			</div>
         </div>
 		<div th:if="${#fields.hasErrors('${createBudgetForm.*}')}">
-			<div class="alert alert-danger" role="alert">
+			<div class="alert alert-danger alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				 </button>
 				<ul class="bg-danger">
 				  <li th:each="err : ${#fields.errors('${createBudgetForm.*}')}" 
 					  th:text="${err}" >Input is incorrect</li>
-			</ul>
+				</ul>
 			</div>
 		</div>
 		<form role="form" action="#" th:action="@{/budget/create}" th:object="${createBudgetForm}" method="POST">

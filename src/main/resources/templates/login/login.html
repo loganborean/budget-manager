@@ -9,19 +9,28 @@
     <div class="row vertical-offset-100">
         <div class="col-md-6 col-md-offset-3">
         <div th:if="${param.error}">
-			<div class="alert alert-danger" role="alert">
+			<div class="alert alert-danger alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				 </button>
 			     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 			     <span class="sr-only">Error:</span>
 			     Username/Password not found
 			</div>
         </div>
         <div th:if="${param.logout}">
-			<div class="alert alert-info" role="alert">
+			<div class="alert alert-info alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				 </button>
 			     You have been logged out
 			</div>
         </div>
         <div th:if="${param.signup}">
-			<div class="alert alert-success" role="alert">
+			<div class="alert alert-success alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				 </button>
 			     Signup successful
 			</div>
         </div>

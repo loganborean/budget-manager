@@ -39,6 +39,7 @@ public class BudgetController {
 
         return "budget/createBudget";
     }
+    
 
     @PostMapping(value = {"/budget/create"})
     public String createBudgetItem(@ModelAttribute("createBudgetForm")

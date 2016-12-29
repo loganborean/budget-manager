@@ -10,11 +10,14 @@
     <div class="row vertical-offset-100">
         <div class="col-md-6 col-md-offset-3">
 			<div th:if="${#fields.hasErrors('${signupForm.*}')}">
-				<div class="alert alert-danger" role="alert">
+				<div class="alert alert-danger alert-dismissable" role="alert">
+					 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					 </button>
 					<ul class="bg-danger">
 					  <li th:each="err : ${#fields.errors('${signupForm.*}')}" 
 						  th:text="${err}" >Input is incorrect</li>
-				</ul>
+					</ul>
 				</div>
 			</div>
             <div class="panel panel-default">
