@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.budget.UiEntity.BudgetSummary;
 import com.budget.dao.BudgetItemDao;
 import com.budget.entity.BudgetItem;
 import com.budget.entity.Category;
 import com.budget.entity.User;
 import com.budget.utils.CurrentUserUtils;
+
 
 @Service
 public class BudgetItemService {
@@ -59,6 +61,23 @@ public class BudgetItemService {
     public void deleteBudgetItemById(int budgetItemId) {
         budgetDao.deleteBudgetItemById(budgetItemId);
         
+    }
+
+    public BudgetSummary getBudgetSummary() {
+        User user = currentUserFinder.getCurrentUser();
+        BudgetSummary summary = new BudgetSummary();
+        List<BudgetItem> allBudgetItems = budgetDao.getAllBudgetItemsForUser(user);
+        summary.setBudgeted((int)getTotalAmountFromBudgetItems(allBudgetItems));
+        // TODO add rest of budget summary
+        return summary;
+    }
+    
+    private double getTotalAmountFromBudgetItems(List<BudgetItem> items) {
+        double total = 0;
+        for (BudgetItem item : items) {
+            total += item.getAmount();
+        }
+        return total;
     }
     
 

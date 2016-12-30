@@ -38,6 +38,9 @@ public class BudgetController {
 
     @GetMapping(value = {"/budget"})
     public String budget(Model model) {
+        
+        
+        model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         model.addAttribute("budgetItems", budgetItemService.getAllBudgetItems());
         return "budget/budget";
     }
@@ -46,6 +49,7 @@ public class BudgetController {
     public String createBudgetForm(Model model) {
         model.addAttribute("createBudgetForm", new BudgetItem());
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
 
         return "budget/createBudget";
     }
@@ -60,8 +64,10 @@ public class BudgetController {
         budgetItemValidator.validate(budgetItem, result);
         if (result.hasErrors()) {
             model.addAttribute("categories", categoryService.getAllCategories());
+            model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
             return "budget/createBudget";
         }
+        System.out.println(budgetItem.getAmount());
         
         budgetItemService.createBudgetItem(budgetItem);
         return "redirect:/budget?budgetItemCreated";
@@ -81,6 +87,7 @@ public class BudgetController {
 
         model.addAttribute("editingBudgetItem", budgetItemService.getBudgetItemById(budgetItemId));
         model.addAttribute("editBudgetItemForm", new BudgetItem());
+        model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         return "budget/editBudget";
     }
 

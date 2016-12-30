@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-	<div th:fragment="summary(title)">
+	<div th:fragment="summary(title, budgeted)">
 		<div id="asdf">
 			<div class="row">
 				<div class="col-lg-12">
@@ -18,7 +18,7 @@
 									<i class="fa fa-tasks fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge">$260</div>
+									<div class="huge" th:text="'$' + ${budgeted}">$260</div>
 									<div>Budgeted</div>
 								</div>
 							</div>
