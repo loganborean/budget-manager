@@ -37,6 +37,29 @@ public class BudgetItemService {
 
         return budgetDao.getAllBudgetItemsForUser(user);
     }
+
+    public boolean budgetItemBelongsToCurrentUser(Integer budgetItemId) {
+        User user = currentUserFinder.getCurrentUser();
+        BudgetItem item = new BudgetItem();
+        item.setUser_id(user.getId());
+        item.setId(budgetItemId);
+
+        return budgetDao.budgetItemForUserExists(item);
+    }
+
+    public BudgetItem getBudgetItemById(int budgetItemId) {
+        return budgetDao.getBudgetById(budgetItemId);
+    }
+
+    public void updateBudgetItem(BudgetItem item) {
+        budgetDao.updateBudgetItemAmount(item);
+        
+    }
+
+    public void deleteBudgetItemById(int budgetItemId) {
+        budgetDao.deleteBudgetItemById(budgetItemId);
+        
+    }
     
 
 }

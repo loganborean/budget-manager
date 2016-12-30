@@ -14,5 +14,13 @@ public interface BudgetItemDao {
 
     List<BudgetItem> getAllBudgetItemsForUser(User user);
 
+    boolean budgetItemForUserExists(BudgetItem item);
+
+    BudgetItem getBudgetById(int budgetItemId);
+
+    void updateBudgetItemAmount(BudgetItem item);
+
+    void deleteBudgetItemById(int budgetItemId);
+
 
 }

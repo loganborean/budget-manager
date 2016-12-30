@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head::head"></div>
+<body>
+	<div th:replace="fragments/header::authenticated"></div>
+	<div class="container">
+		<div th:replace="fragments/summary::summary('Edit Budget')"></div>
+		<br/>
+		<div th:if="${#fields.hasErrors('${editBudgetItemForm.*}')}">
+			<div class="alert alert-danger alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				 </button>
+				<ul class="bg-danger">
+				  <li th:each="err : ${#fields.errors('${editBudgetItemForm.*}')}" 
+					  th:text="${err}" >Input is incorrect</li>
+				</ul>
+			</div>
+		</div>
+		<div th:if="${flashErrorMessage != null}" >
+			<div class="alert alert-danger alert-dismissable" role="alert">
+				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				 </button>
+				 <p th:text="${flashErrorMessage}">message</p>
+			</div>
+		</div>
+		<form role="form" action="#" th:action="@{/budget/edit/} + ${editingBudgetItem.id}" th:object="${editBudgetItemForm}" method="POST">
+			<fieldset>
+				<div class="col-xs-5" style="padding-left: 0px;">
+				    <h3>Enter a new amount for <span th:text="${editingBudgetItem.category.name}">Budget Item</span></h3>
+					<div class="form-group">
+						<label for="amount">Amount</label>
+						<div class="input-group">
+							<span class="input-group-addon">$</span>
+							<input type="text" class="form-control"
+								   name="amount" id="amount" value="0" th:value="${editingBudgetItem.amount}"/>
+						</div>
+					</div>
+					<div class="pull-left">
+						<input class="btn btn-md btn-success" type="submit"
+							value="Save"/>
+					</div>
+					<div class="pull-right">
+						<a th:href="@{/budget}"><button type="button"
+								class="btn btn-md btn-danger" value="Cancel">Cancel</button></a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+
+
+
+	</div>
+</body>
+</html>

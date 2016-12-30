@@ -96,6 +96,61 @@ public class BudgetItemDaoImpl implements BudgetItemDao {
         return budgetItems;
     }
 
+    @Override
+    public boolean budgetItemForUserExists(BudgetItem item) {
+        String sql = "SELECT * FROM budget_item "
+                   + " WHERE user_id = ? "
+                   + " AND id = ? ";
+        try {
+            jdbcTemp.queryForObject(sql,
+                new Object[]{item.getUser_id(), item.getId()},
+                new BudgetItemRowMapper());
+        } catch (DataAccessException ex) {
+            return false;
+        }
+        return true;
+    }
 
+    @Override
+    public BudgetItem getBudgetById(int budgetItemId) {
+        String sql = "SELECT * FROM budget_item "
+                   + " WHERE id = ? ";
+        BudgetItem budgetItem = null;
+        try {
+             budgetItem = jdbcTemp.queryForObject(sql,
+                            new Object[]{budgetItemId},
+                            new BudgetItemRowMapper());
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return budgetItem;
+    }
+
+    @Override
+    public void updateBudgetItemAmount(BudgetItem item) {
+        String sql = "UPDATE budget_item "
+                   + " SET amount = ? "
+                   + " WHERE id = ?";
+        try {
+            jdbcTemp.update(sql, new Object[]{item.getAmount(),
+                                              item.getId()});
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
+    @Override
+    public void deleteBudgetItemById(int budgetItemId) {
+        String sql = "DELETE FROM budget_item "
+                   + " WHERE id = ?";
+        try {
+            jdbcTemp.update(sql, new Object[]{budgetItemId});
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+
+        
+    }
 
 }

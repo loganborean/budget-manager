@@ -53,9 +53,14 @@ public class PagesController {
     }
 
     @GetMapping(value = "/error")
-    public String signupSubmit() {
+    public String error() {
 
-        return "OOPS something went wrong";
+        return "errors/unauthorized";
+    }
+
+    @GetMapping(value = "/unauthorized")
+    public String unauthorized() {
+        return "errors/unauthorized";
     }
     
     
