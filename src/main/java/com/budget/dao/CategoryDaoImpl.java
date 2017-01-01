@@ -97,5 +97,24 @@ public class CategoryDaoImpl implements CategoryDao {
         return categories;
         
     }
+    
+    
+    @Override
+    public List<Category> getAllCategoriesBudgetedForUser(User user) {
+        String sql = "SELECT * FROM category "
+                   + " WHERE user_id = ? "
+                   + " AND EXISTS "
+                           + "(SELECT * FROM budget_item "
+                           + "WHERE category.id = budget_item.category_id) ";
+        List<Category> categoriedBudgetedFor = null;
+        try {
+             categoriedBudgetedFor = jdbcTemp.query(sql,
+                            new Object[]{user.getId()},
+                            new CategoryRowMapper());
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        return categoriedBudgetedFor;
+    }
 
 }

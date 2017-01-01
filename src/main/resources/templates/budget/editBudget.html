@@ -4,7 +4,7 @@
 <body>
 	<div th:replace="fragments/header::authenticated"></div>
 	<div class="container">
-		<div th:replace="fragments/summary::summary('Budget', ${budgetSummary.budgeted})"></div>
+		<div th:replace="fragments/summary::summary('Edit Budget', ${budgetSummary.budgeted})"></div>
 		<br/>
 		<div th:if="${#fields.hasErrors('${editBudgetItemForm.*}')}">
 			<div class="alert alert-danger alert-dismissable" role="alert">

@@ -4,28 +4,31 @@
 <body>
 	<div th:replace="fragments/header::authenticated"></div>
 	<div class="container">
-		<div th:replace="fragments/summary::summary('Create Budget Item', ${budgetSummary.budgeted})"></div>
+		<div th:replace="fragments/summary::summary('Create Expense', ${budgetSummary.budgeted})"></div>
 		<br/>
-        <div th:if="${param.categoryInsert}">
-			<div class="alert alert-info alert-dismissible" role="alert">
-				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				    <span aria-hidden="true">&times;</span>
-				 </button>
-			     Category Inserted
-			</div>
-        </div>
-		<div th:if="${#fields.hasErrors('${createBudgetForm.*}')}">
+		<div th:if="${#fields.hasErrors('${createExpenseForm.*}')}">
 			<div class="alert alert-danger alert-dismissable" role="alert">
 				 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				    <span aria-hidden="true">&times;</span>
 				 </button>
 				<ul class="bg-danger">
-				  <li th:each="err : ${#fields.errors('${createBudgetForm.*}')}" 
+				  <li th:each="err : ${#fields.errors('${createExpenseForm.*}')}" 
 					  th:text="${err}" >Input is incorrect</li>
 				</ul>
 			</div>
 		</div>
-		<form role="form" action="#" th:action="@{/budget/create}" th:object="${createBudgetForm}" method="POST">
+	<div th:if="${flashErrorMessage != null}" >
+		<div class="alert alert-danger alert-dismissable" role="alert">
+			 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			 </button>
+			 <ul class="bg-danger">
+			   <li th:each="err : ${flashErrorMessage}" 
+			 	  th:text="${err.defaultMessage}" >Input is incorrect</li>
+			 </ul>
+		</div>
+	</div>
+		<form role="form" action="#" th:action="@{/spending/create}" th:object="${createExpenseForm}" method="POST">
 			<fieldset>
 				<div class="col-xs-5" style="padding-left: 0px;">
 					<div class="form-group">
@@ -35,11 +38,10 @@
 							</option>
 						</select>
 					</div>
-					<a th:href="@{/category/create}">
-						<button type="button" class="btn btn-md btn-info">+
-							Create Category
-						</button>
-					</a>
+					<div class="form-group">
+						<label for="note">Note</label>
+						<textarea class="form-control" rows="3" th:field="*{note}"></textarea>
+					</div>
 				</div>
 				<div class="col-md-7">
 					<div class="form-group">
@@ -55,7 +57,7 @@
 							value="+ Create"/>
 					</div>
 					<div class="pull-right">
-						<a th:href="@{/budget}"><button type="button"
+						<a th:href="@{/spending}"><button type="button"
 								class="btn btn-lg btn-danger" value="Cancel">Cancel</button></a>
 					</div>
 				</div>

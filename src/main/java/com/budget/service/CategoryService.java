@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.budget.dao.BudgetItemDao;
 import com.budget.dao.CategoryDao;
 import com.budget.entity.Category;
 import com.budget.entity.User;
@@ -39,6 +40,11 @@ public class CategoryService {
         User user = currentUserFinder.getCurrentUser();
 
         return categoryDao.getAllCategoriesForUser(user);
+    }
+
+    public List<Category> getCategoriesBudgetedFor() {
+        User user = currentUserFinder.getCurrentUser();
+        return categoryDao.getAllCategoriesBudgetedForUser(user);
     }
 
 }

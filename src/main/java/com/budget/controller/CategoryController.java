@@ -11,20 +11,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.budget.entity.Category;
+import com.budget.service.BudgetItemService;
 import com.budget.service.CategoryService;
 
 @Controller
 public class CategoryController {
     
     @Autowired @Qualifier("categoryValidator")
-    Validator categoryValidator; 
+    private Validator categoryValidator; 
 
     @Autowired
-    CategoryService categoryService; 
+    private CategoryService categoryService; 
+
+    @Autowired
+    private BudgetItemService budgetItemService; 
 
     @GetMapping(value = {"/category/create"})
     public String createCategoryForm(Model model) {
         model.addAttribute("createCategoryForm", new Category());
+        model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
 
         return "budget/createCategory";
     }

@@ -14,4 +14,6 @@ public interface CategoryDao {
     Category getCategoryById(int id);
 
     List<Category> getAllCategoriesForUser(User user);
+
+    List<Category> getAllCategoriesBudgetedForUser(User user);
 }

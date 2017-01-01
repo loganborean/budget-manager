@@ -25,21 +25,19 @@ import com.budget.validators.BudgetItemModificationValidator;
 public class BudgetController {
     
     @Autowired @Qualifier("budgetItemValidator")
-    Validator budgetItemValidator;
+    private Validator budgetItemValidator;
 
     @Autowired 
-    BudgetItemModificationValidator budgetItemModificationValidator;
+    private BudgetItemModificationValidator budgetItemModificationValidator;
 
     @Autowired
-    BudgetItemService budgetItemService;
+    private BudgetItemService budgetItemService;
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping(value = {"/budget"})
     public String budget(Model model) {
-        
-        
         model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         model.addAttribute("budgetItems", budgetItemService.getAllBudgetItems());
         return "budget/budget";
@@ -67,7 +65,6 @@ public class BudgetController {
             model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
             return "budget/createBudget";
         }
-        System.out.println(budgetItem.getAmount());
         
         budgetItemService.createBudgetItem(budgetItem);
         return "redirect:/budget?budgetItemCreated";

@@ -8,7 +8,6 @@ import org.springframework.validation.Validator;
 
 import com.budget.entity.BudgetItem;
 import com.budget.service.BudgetItemService;
-import com.budget.service.CategoryService;
 
 @Component
 @Qualifier("budgetItemValidator")
@@ -16,9 +15,6 @@ public class BudgetItemValidator implements Validator {
     
     @Autowired
     BudgetItemService budgetService;
-
-    @Autowired
-    CategoryService categoryService;
 
     @Override
     public boolean supports(Class<?> clazz) {
