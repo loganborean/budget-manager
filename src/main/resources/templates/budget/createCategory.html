@@ -4,7 +4,10 @@
 <body>
 	<div th:replace="fragments/header::authenticated"></div>
 	<div class="container">
-		<div th:replace="fragments/summary::summary('Create Category', ${budgetSummary.budgeted})"></div>
+		<div th:replace="fragments/summary::summary('Create Category', ${budgetSummary.budgeted}, 
+		                                                      ${budgetSummary.spent}, 
+		                                                      ${budgetSummary.left},
+		                                                      ${budgetSummary.overBudget})"></div>
 
 			<div th:if="${#fields.hasErrors('${createCategoryForm.*}')}">
 				<div class="alert alert-danger alert-dismissable" role="alert">

@@ -10,6 +10,7 @@ import com.budget.UiEntity.BudgetSummary;
 import com.budget.dao.BudgetItemDao;
 import com.budget.entity.BudgetItem;
 import com.budget.entity.Category;
+import com.budget.entity.Expense;
 import com.budget.entity.User;
 import com.budget.utils.CurrentUserUtils;
 
@@ -22,6 +23,9 @@ public class BudgetItemService {
 
     @Autowired
     CurrentUserUtils currentUserFinder;
+    
+    @Autowired
+    SpendingService spendingService;
 
     public boolean hasBudgetedForCategory(Category category) {
         return budgetDao.budgetForCategoryExists(category);
@@ -67,9 +71,31 @@ public class BudgetItemService {
         User user = currentUserFinder.getCurrentUser();
         BudgetSummary summary = new BudgetSummary();
         List<BudgetItem> allBudgetItems = budgetDao.getAllBudgetItemsForUser(user);
-        summary.setBudgeted((int)getTotalAmountFromBudgetItems(allBudgetItems));
-        // TODO add rest of budget summary
+        int budgeted = (int)getTotalAmountFromBudgetItems(allBudgetItems);
+        int totalSpent = (int) getTotalAmountSpent();
+        int left, overBudget;
+
+        if (budgeted - totalSpent <= 0) {
+            left = 0;
+            overBudget = totalSpent - budgeted;
+        } else {
+            left = budgeted - totalSpent;
+            overBudget = 0;
+        }
+        summary.setBudgeted(budgeted);
+        summary.setSpent(totalSpent);
+        summary.setLeft(left);
+        summary.setOverBudget(overBudget);
         return summary;
+    }
+    
+    private double getTotalAmountSpent() {
+        List<Expense> expenses = spendingService.getCurrentMonthsExpenses();
+        double total = 0;
+        for (Expense expense : expenses) {
+            total += expense.getAmount();
+        }
+        return total;
     }
     
     private double getTotalAmountFromBudgetItems(List<BudgetItem> items) {

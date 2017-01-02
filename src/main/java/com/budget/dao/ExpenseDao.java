@@ -12,4 +12,5 @@ public interface ExpenseDao {
 
     List<Expense> getExpensesForUserAfterDate(User currentUser, Timestamp firstDayOfMonth);
 
+
 }

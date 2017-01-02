@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.budget.entity.BudgetItem;
 import com.budget.service.BudgetItemService;
 import com.budget.service.CategoryService;
+import com.budget.service.SpendingService;
 import com.budget.validators.BudgetItemModificationValidator;
 
 @Controller
@@ -34,12 +35,16 @@ public class BudgetController {
     private BudgetItemService budgetItemService;
 
     @Autowired
+    private SpendingService spendingService;;
+
+    @Autowired
     private CategoryService categoryService;
 
     @GetMapping(value = {"/budget"})
     public String budget(Model model) {
         model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         model.addAttribute("budgetItems", budgetItemService.getAllBudgetItems());
+        model.addAttribute("categoryExpenseSummary", spendingService.getAllSpendingSummaries());
         return "budget/budget";
     }
 

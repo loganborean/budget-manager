@@ -4,7 +4,10 @@
 <body>
 	<div th:replace="fragments/header::authenticated"></div>
 	<div class="container">
-		<div th:replace="fragments/summary::summary('Create Budget Item', ${budgetSummary.budgeted})"></div>
+		<div th:replace="fragments/summary::summary('Create Budget Item', ${budgetSummary.budgeted}, 
+		                                                      ${budgetSummary.spent}, 
+		                                                      ${budgetSummary.left},
+		                                                      ${budgetSummary.overBudget})"></div>
 		<br/>
         <div th:if="${param.categoryInsert}">
 			<div class="alert alert-info alert-dismissible" role="alert">

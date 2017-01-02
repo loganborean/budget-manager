@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-	<div th:fragment="summary(title, budgeted)">
+	<div th:fragment="summary(title, budgeted, spent, left, overBudget)">
 		<div id="asdf">
 			<div class="row">
 				<div class="col-lg-12">
@@ -18,7 +18,7 @@
 									<i class="fa fa-tasks fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge" th:text="'$' + ${budgeted}">$260</div>
+									<div class="huge" th:text="'$' + ${budgeted}">$0</div>
 									<div>Budgeted</div>
 								</div>
 							</div>
@@ -33,7 +33,7 @@
 									<i class="fa fa-shopping-cart fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge">$120</div>
+									<div class="huge" th:text="'$' + ${spent}">$0</div>
 									<div>Spent</div>
 								</div>
 							</div>
@@ -48,7 +48,7 @@
 									<i class="fa fa-money fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge">$140</div>
+									<div class="huge" th:text="'$' + ${left}">$0</div>
 									<div>Left</div>
 								</div>
 							</div>
@@ -63,7 +63,7 @@
 									<i class="fa fa-thumbs-down fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div class="huge">$0</div>
+									<div class="huge" th:text="'$' + ${overBudget}">$0</div>
 									<div>Over Budget</div>
 								</div>
 							</div>

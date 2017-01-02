@@ -4,7 +4,10 @@
 <body>
 <div th:replace="fragments/header::authenticated"></div>
 <div class="container">
-	<div th:replace="fragments/summary::summary('Spending', ${budgetSummary.budgeted})"></div>
+		<div th:replace="fragments/summary::summary('Spending', ${budgetSummary.budgeted}, 
+		                                                      ${budgetSummary.spent}, 
+		                                                      ${budgetSummary.left},
+		                                                      ${budgetSummary.overBudget})"></div>
 </div>
 <div class="container">
 	<a th:href="@{/spending/create}"><button class="btn btn-lg btn-success">Add Expense</button></a>
@@ -21,8 +24,8 @@
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Category" disabled="disabled"/></th>
                         <th><input type="text" class="form-control" placeholder="Amount" disabled="disabled"/></th>
-                        <th><input type="text" class="form-control" placeholder="Note" disabled="disabled"/></th>
                         <th><input type="text" class="form-control" placeholder="Date" disabled="disabled"/></th>
+                        <th><input type="text" class="form-control" placeholder="Note" disabled="disabled"/></th>
                     </tr>
                 </thead>
                 <tbody>
