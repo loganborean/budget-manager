@@ -12,5 +12,9 @@ public interface ExpenseDao {
 
     List<Expense> getExpensesForUserAfterDate(User currentUser, Timestamp firstDayOfMonth);
 
+    boolean expenseExists(Expense expenseToValidate);
+
+    void deleteExpenseById(int id);
+
 
 }

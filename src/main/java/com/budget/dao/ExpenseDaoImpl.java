@@ -84,5 +84,34 @@ public class ExpenseDaoImpl implements ExpenseDao {
         }
         return expenses;
     }
+
+    @Override
+    public boolean expenseExists(Expense expenseToValidate) {
+        String sql = "SELECT * FROM expense "
+                   + " WHERE user_id = ? "
+                   + " AND id = ?";
+        try {
+            Expense expense = jdbcTemp.queryForObject(sql,
+                                 new Object[]{expenseToValidate.getUser_id(),
+                                              expenseToValidate.getId()},
+                                 new ExpenseRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void deleteExpenseById(int id) {
+        String sql = "DELETE FROM expense "
+                   + " WHERE id = ?";
+        try {
+            jdbcTemp.update(sql, new Object[]{id});
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
     
 }

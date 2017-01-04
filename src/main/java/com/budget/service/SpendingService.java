@@ -90,6 +90,18 @@ public class SpendingService {
             return "progress-bar-danger";
         }
     }
+
+    public boolean expenseBelongsToCurentUser(int id) {
+        User currentUser = currentUserFinder.getCurrentUser();
+        Expense expenseToValidate = new Expense();
+        expenseToValidate.setUser_id(currentUser.getId());
+        expenseToValidate.setId(id);
+        return expenseDao.expenseExists(expenseToValidate);
+    }
+
+    public void deleteExpenseById(int id) {
+        expenseDao.deleteExpenseById(id);
+    }
     
     
     

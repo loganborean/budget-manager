@@ -31,9 +31,16 @@
                 <tbody>
 					<tr th:each="expense : ${expenses}">
 					   <td th:text="${expense.category.name}">#</td>
-					   <td th:text="${expense.amount}">#</td>
+					   <td th:text="'$' + ${expense.amount}">#</td>
 					   <td th:text="${expense.date}">#</td>
 					   <td th:text="${expense.note}">#</td>
+					   <td>
+					       <a th:href="@{/expense/delete/} + ${expense.id}">
+							   <button class="btn btn-sm btn-danger">
+							     <span class="glyphicon glyphicon-trash"></span>
+							   </button>
+						   </a>
+					   </td>
 					</tr>
                 </tbody>
             </table>	

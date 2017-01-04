@@ -11,6 +11,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -18,6 +19,7 @@ import com.budget.entity.Expense;
 import com.budget.service.BudgetItemService;
 import com.budget.service.CategoryService;
 import com.budget.service.SpendingService;
+import com.budget.validators.ExpenseModificationValidator;
 
 @Controller
 public class SpendingController {
@@ -33,6 +35,9 @@ public class SpendingController {
 
     @Autowired @Qualifier("expenseValidator")
     private Validator expenseValidator;
+
+    @Autowired 
+    private ExpenseModificationValidator expenseModificationValidator;
 
     @GetMapping(value = {"/spending"})
     public String spendingOverview(Model model) {
@@ -70,6 +75,19 @@ public class SpendingController {
         }
         
         spendingService.insertExpense(expense);
+        return "redirect:/spending";
+    }
+
+    @GetMapping(value = "/expense/delete/{id}")
+    public String deleteBudgetItem(@PathVariable int id, Model model) {
+
+        if (!expenseModificationValidator.validModificationRequest(id)) {
+            return "redirect:/unauthorized";
+        }
+
+        spendingService.deleteExpenseById(id);
+
+
         return "redirect:/spending";
     }
 }

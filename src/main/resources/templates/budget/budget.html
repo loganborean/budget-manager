@@ -42,7 +42,7 @@
 				</button>
 			</a> 
 			<p style="font-size: 25px; font-style: italic; float: right">
-				<span th:text="${categoryExpenseSummary[__${budgetItem.category.name}__].spent}"></span> of <span th:text="${budgetItem.amount}">thing</span>
+				<span th:text="'$' + ${categoryExpenseSummary[__${budgetItem.category.name}__].spent}"></span> of <span th:text="'$' + ${budgetItem.amount}">thing</span>
 			</p>
 			
 			
