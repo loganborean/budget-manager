@@ -10,22 +10,14 @@
 		                                                      ${budgetSummary.overBudget})"></div>
 </div>
 <div class="container">
-	<a th:href="@{/spending/create}"><button class="btn btn-lg btn-success">Add Expense</button></a>
-	
-        <div class="panel panel-primary filterable">
+        <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">This Months Expenses</h3>
-                <div class="pull-right">
-                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
-                </div>
+                <h3 class="panel-title">Categories</h3>
             </div>
 			<table class="table">
                 <thead>
-                    <tr class="filters">
-                        <th><input type="text" class="form-control" placeholder="Category" disabled="disabled"/></th>
-                        <th><input type="text" class="form-control" placeholder="Amount" disabled="disabled"/></th>
-                        <th><input type="text" class="form-control" placeholder="Date" disabled="disabled"/></th>
-                        <th><input type="text" class="form-control" placeholder="Note" disabled="disabled"/></th>
+                    <tr >
+                        <th><input type="text" class="form-control" placeholder="Name" disabled="disabled"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,16 +36,7 @@
 					</tr>
                 </tbody>
             </table>	
-	
-	
-	
-	
-	
-	
-	
 	</div>
-
-	
 </div>
 </body>
 </html>

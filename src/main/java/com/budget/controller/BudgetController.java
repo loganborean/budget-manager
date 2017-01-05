@@ -44,6 +44,7 @@ public class BudgetController {
     public String budget(Model model) {
         model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         model.addAttribute("budgetItems", budgetItemService.getAllBudgetItems());
+        model.addAttribute("unbudgetedCategories", spendingService.getAllUnbudgetedForCategories());
         model.addAttribute("categoryExpenseSummary", spendingService.getAllSpendingSummaries());
         return "budget/budget";
     }

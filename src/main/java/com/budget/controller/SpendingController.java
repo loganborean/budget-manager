@@ -56,7 +56,7 @@ public class SpendingController {
         }
 
         model.addAttribute("createExpenseForm", new Expense());
-        model.addAttribute("categories", categoryService.getCategoriesBudgetedFor());
+        model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("budgetSummary", budgetItemService.getBudgetSummary());
         return "spending/createExpense";
     }

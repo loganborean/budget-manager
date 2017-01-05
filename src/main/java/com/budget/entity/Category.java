@@ -5,6 +5,28 @@ public class Category {
     private int id;
     private int user_id;
     private String name;
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+
+        if (!(obj instanceof Category)) {
+            return false;
+        }
+
+        Category category = (Category) obj;
+
+        return category.getName().equals(name) &&
+                category.getId() == id &&
+                category.getUser_id() == (user_id);
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + id;
+        return result;
+    }
 
     public int getId() {
         return id;
