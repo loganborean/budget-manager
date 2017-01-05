@@ -83,4 +83,27 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    @Override
+    public void insertDefaultCategoriesForUser(User user) {
+        String sql = "INSERT INTO category (user_id, name) "
+                   + " values (?, ?), (?, ?), (?, ?), (?, ?), (?, ?) ";
+        try {
+            jdbcTemp.update(sql, new Object[]{
+                    user.getId(),
+                    "Rent",
+                    user.getId(),
+                    "Groceries",
+                    user.getId(),
+                    "Gas",
+                    user.getId(),
+                    "Clothes",
+                    user.getId(),
+                    "Recreation",
+            });
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
 }

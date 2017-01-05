@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/head::head"></div>
 <body>
-	<div th:replace="fragments/header::authenticated"></div>
+	<div th:replace="fragments/header::authenticated('spending')"></div>
 	<div class="container">
 		<div th:replace="fragments/summary::summary('Create Expense', ${budgetSummary.budgeted}, 
 		                                                      ${budgetSummary.spent}, 

@@ -10,4 +10,6 @@ public interface UserDao {
 
     public void insertUser(User user);
 
+    public void insertDefaultCategoriesForUser(User user);
+
 }
