@@ -22,6 +22,8 @@ public class CategoryService {
     CurrentUserUtils currentUserFinder;
 
     public boolean categoryExists(Category category) {
+        User user = currentUserFinder.getCurrentUser();
+        category.setUser_id(user.getId());
         return categoryDao.categoryExists(category);
     }
     

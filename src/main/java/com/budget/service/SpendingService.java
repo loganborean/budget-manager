@@ -78,7 +78,6 @@ public class SpendingService {
         
         Map<Category, Double> categoryAmountMap = new HashMap<>();
         
-        
         for (Expense expense : expenses) {
             if (!budgetedForCategoryIds.contains(expense.getCategory().getId())) {
                 if (categoryAmountMap.containsKey(expense.getCategory())) {
@@ -87,9 +86,7 @@ public class SpendingService {
                 } else {
                     categoryAmountMap.put(expense.getCategory(), expense.getAmount());
                 }
-                
             }
-            
         }
         return categoryAmountMap;
     }

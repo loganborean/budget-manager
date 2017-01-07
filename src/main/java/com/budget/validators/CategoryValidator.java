@@ -20,8 +20,6 @@ public class CategoryValidator implements Validator {
     @Autowired
     CategoryService categoryService;
     
-    @Autowired
-    CurrentUserUtils currentUserFinder;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -37,9 +35,6 @@ public class CategoryValidator implements Validator {
             errors.reject("invalidCategory",
                     "You must enter something for the category name");
         }
-
-        User user = currentUserFinder.getCurrentUser();
-        category.setUser_id(user.getId());
         
         if (categoryService.categoryExists(category)) {
             errors.reject("categoryExists",

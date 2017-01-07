@@ -49,8 +49,24 @@ public class CategoryDaoImpl implements CategoryDao {
             return false;
         }
         return true;
+    }
 
-        
+    @Override
+    public Category getCategoryByName(Category categoryToFind) {
+        String sql = "SELECT * FROM category "
+                   + " WHERE user_id = ? "
+                   + " AND name = ? ";
+        Category category = null;
+        try {
+            category = jdbcTemp.queryForObject(sql,
+                            new Object[]{categoryToFind.getUser_id(),
+                                         categoryToFind.getName()},
+                            new CategoryRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return null;
+        }
+        return category;
     }
 
     @Override

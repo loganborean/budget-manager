@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li th:classappend="${page} == 'budget' ? active : blank"><a th:href="@{/budget}">Budget</a></li>
                 <li th:classappend="${page} == 'spending' ? active : blank"><a th:href="@{/spending}">Spending</a></li>
-                <li th:classappend="${page} == 'analysis' ? active : blank"><a href="#">Analysis</a></li>
+                <li th:classappend="${page} == 'trends' ? active : blank"><a th:href="@{/trends}">Trends</a></li>
             </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>

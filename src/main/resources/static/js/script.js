@@ -40,3 +40,31 @@ $(document).ready(function(){
         }
     });
 });
+
+
+	jQuery(document).ready(
+		function($) {
+
+		  $("#update-chart").click(function(event) {
+
+			var categoryId = $('#category').val();
+			var dateFrom = $('#dateFrom').val();
+
+			var url = '/trends/data?' + 'category=' + categoryId + '&date=' + dateFrom;
+			
+			$.ajax({
+			     url: url,
+			     error: function() {
+			    	 alert('error')
+			     },
+			     dataType: 'json',
+			     success: function(data) {
+			    	 alert('good' + data)
+			     },
+			     type: 'GET'
+			  });
+
+
+		});
+
+	});

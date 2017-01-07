@@ -113,5 +113,30 @@ public class ExpenseDaoImpl implements ExpenseDao {
         }
         
     }
+
+    @Override
+    public List<Expense> getExpensesForCategoryAfterDateForUser(Category category, Timestamp dateFrom, User user) {
+        String sql = "SELECT * FROM expense "
+                   + " WHERE user_id = ? "
+                   + " AND date > ?";
+
+        List<Object> args = new ArrayList<>();
+        args.add(user.getId());
+        args.add(dateFrom);
+
+        if (category != null) {
+            sql += " AND category_id = ?";
+            args.add(category.getId());
+        }
+
+        List<Expense> expenses = null;
+        try {
+            expenses = jdbcTemp.query(sql, args.toArray(), new ExpenseRowMapper());
+            
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+        }
+       return expenses;
+    }
     
 }

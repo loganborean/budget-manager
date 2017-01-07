@@ -3,6 +3,7 @@ package com.budget.dao;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.budget.entity.Category;
 import com.budget.entity.Expense;
 import com.budget.entity.User;
 
@@ -15,6 +16,9 @@ public interface ExpenseDao {
     boolean expenseExists(Expense expenseToValidate);
 
     void deleteExpenseById(int id);
+
+
+    List<Expense> getExpensesForCategoryAfterDateForUser(Category category, Timestamp dateFrom, User user);
 
 
 }

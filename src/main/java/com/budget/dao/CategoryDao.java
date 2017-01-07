@@ -16,4 +16,6 @@ public interface CategoryDao {
     List<Category> getAllCategoriesForUser(User user);
 
     List<Category> getAllCategoriesBudgetedForUser(User user);
+
+    Category getCategoryByName(Category categoryToFind);
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/head::head"></div>
+<body>
+	<div th:replace="fragments/header::authenticated('budget')"></div>
+	<div class="container">
+		<div th:replace="fragments/summary::summary('Analyze Trends', ${budgetSummary.budgeted}, 
+		                                                      ${budgetSummary.spent}, 
+		                                                      ${budgetSummary.left},
+		                                                      ${budgetSummary.overBudget})"></div>
+		<br/>
+		<fieldset>
+			<div class="col-xs-5" style="padding-left: 0px;">
+				<div class="form-group">
+					<label for="category">Filter By Category</label>
+					<select class="form-control" id="category">
+					    <option value="-1">All</option>
+						<option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}">category
+						</option>
+					</select>
+				</div>
+				<button type="button" id="update-chart" class="btn btn-md btn-info">Update Chart</button>
+			</div>
+			<div class="col-md-7">
+				<div class="form-group">
+					<label for="category">Filter By Date</label>
+					<select class="form-control" id="dateFrom">
+					    <option value="3">Last 3 Months</option>
+					    <option value="6">Last 6 Months</option>
+					    <option value="9">Last 9 Months</option>
+					    <option value="12">Last 12 Months</option>
+					</select>
+				</div>
+			</div>
+		</fieldset>
+
+
+
+	</div>
+	<script>
+	</script>
+</body>
+</html>
