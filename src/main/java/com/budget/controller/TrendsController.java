@@ -1,5 +1,8 @@
 package com.budget.controller;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +51,7 @@ public class TrendsController {
         
         GraphResponse response = trendsService.getGraphData(categoryName, dateFrom);
         
-        GraphResponse resp = new GraphResponse();
-        resp.setAverage(423.33);
-        resp.setMonths("fuckyou");
-
-        return ResponseEntity.ok(resp);
+        return ResponseEntity.ok(response);
     }
     
 }

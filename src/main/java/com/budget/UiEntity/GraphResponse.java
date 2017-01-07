@@ -1,20 +1,18 @@
 package com.budget.UiEntity;
 
-    
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class GraphResponse {
-    private String months;
-    private double average;
-    public String getMonths() {
-        return months;
+    private Map<String, Double> monthTotals;
+
+    public Map<String, Double> getMonthTotals() {
+        return monthTotals;
     }
-    public void setMonths(String months) {
-        this.months = months;
+
+    public void setMonthTotals(Map<String, Double> monthTotals) {
+        this.monthTotals = monthTotals;
     }
-    public double getAverage() {
-        return average;
-    }
-    public void setAverage(double average) {
-        this.average = average;
-    }
-    
+
 }

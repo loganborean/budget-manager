@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,17 +72,21 @@ public class TrendsService {
             monthTotalExpense.put(monthName, currentTotal + expense.getAmount());
         }
         
-        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
-            String key = entry.getKey();
-            Double value = entry.getValue();
-            System.out.println(key + "   " + value);
-        }
+        GraphResponse response = new GraphResponse();
+        response.setMonthTotals(monthTotalExpense);
         
-        return null;
+        
+//        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
+//            String key = entry.getKey();
+//            Double value = entry.getValue();
+//            System.out.println(key + "   " + value);
+//        }
+        
+        return response;
     }
     
     private Map<String, Double> initMonthTotalExpenseMap(int numMonthsBack) {
-        Map<String, Double> monthExpenseTotal = new HashMap<>();
+        Map<String, Double> monthExpenseTotal = new LinkedHashMap<>();
 
         Calendar cal = Calendar.getInstance();
         for (int i = numMonthsBack; i > 0; i--) {
@@ -92,11 +97,6 @@ public class TrendsService {
         return monthExpenseTotal;
     }
 
-    public static void main(String[] args) {
-        TrendsService s = new TrendsService();
-        
-        s.getGraphData("-1", 3);
-    }
     
     
     private Timestamp getStartingTimestampOfXMonthsAgo(int months) {

@@ -42,29 +42,117 @@ $(document).ready(function(){
 });
 
 
-	jQuery(document).ready(
-		function($) {
+jQuery(document).ready(
+	function($) {
 
-		  $("#update-chart").click(function(event) {
+		$("#update-chart").click(
+				function(event) {
 
-			var categoryId = $('#category').val();
-			var dateFrom = $('#dateFrom').val();
+					var categoryId = $('#category').val();
+					var dateFrom = $('#dateFrom').val();
 
-			var url = '/trends/data?' + 'category=' + categoryId + '&date=' + dateFrom;
-			
-			$.ajax({
-			     url: url,
-			     error: function() {
-			    	 alert('error')
-			     },
-			     dataType: 'json',
-			     success: function(data) {
-			    	 alert('good' + data)
-			     },
-			     type: 'GET'
-			  });
+					var url = '/trends/data?' + 'category=' + categoryId
+							+ '&date=' + dateFrom;
 
+					$.ajax({
+						url : url,
+						error : function() {
+							alert('error')
+						},
+						dataType : 'json',
+						success : function(data) {
+							doThing(data);
+						},
+						type : 'GET'
+					});
 
-		});
+				});
 
 	});
+
+function doThing(data) {
+	
+	var monthTotals = data.monthTotals;
+	var arr =[];
+	for (var key in monthTotals) {
+		if (monthTotals.hasOwnProperty(key)) {
+			arr.unshift([key, monthTotals[key]]);
+
+		    console.log(key + " -> " + monthTotals[key]);
+		}	
+	}
+	arr.unshift(['Month', 'Total']);
+	
+	for (var i = 0; i < arr.length; i++) {
+		for (var j = 0; j < arr[0].length; j++) {
+			console.log(arr[i][j]);
+
+		}
+	}
+}
+
+
+$(document).ready(function(){
+
+					var categoryId = $('#category').val();
+					var dateFrom = $('#dateFrom').val();
+
+					var url = '/trends/data?' + 'category=' + categoryId
+							+ '&date=' + dateFrom;
+
+					$.ajax({
+						url : url,
+						error : function() {
+							alert('error')
+						},
+						dataType : 'json',
+						success : function(data) {
+							doThing(data);
+						},
+						type : 'GET'
+					});
+
+	
+google.charts.load('current', {
+	'packages' : [ 'bar' ]
+});
+google.charts.setOnLoadCallback(function() { drawStuff(arr) });
+
+function drawStuff(msg) {
+	var data = new google.visualization.arrayToDataTable([
+			[ 'Move', 'Percentage' ], [ "King's pawn (e4)", 44 ],
+			[ "Queen's pawn (d4)", 31 ], [ "Knight to King 3 (Nf3)", 12 ],
+			[ "Queen's bishop pawn (c4)", 10 ], [ 'Other', 3 ] ]);
+	alert(arr);
+
+	var options = {
+		title : 'Total Expenses Over Months',
+		width : '100%',
+		legend : {
+			position : 'none'
+		},
+		chart : {
+			subtitle : 'Amount by $'
+		},
+		axes : {
+			x : {
+				0 : {
+					side : 'bottom',
+					label : 'White to move'
+				}
+			// Top x-axis.
+			}
+		},
+		bar : {
+			groupWidth : "90%"
+		}
+	};
+
+	var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+	// Convert the Classic options to Material options.
+	chart.draw(data, google.charts.Bar.convertOptions(options));
+};
+	
+	
+	
+});
