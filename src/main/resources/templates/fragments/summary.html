@@ -15,7 +15,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-tasks fa-5x"></i>
+									<span class="glyphicon glyphicon-tasks glyphSize"></span>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge" th:text="'$' + ${budgeted}">$0</div>
@@ -30,7 +30,8 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-shopping-cart fa-5x"></i>
+									<!--  <i class="fa fa-shopping-cart fa-5x"></i>-->
+									<span class="glyphicon glyphicon-shopping-cart glyphSize"></span>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge" th:text="'$' + ${spent}">$0</div>
@@ -45,7 +46,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-money fa-5x"></i>
+									<span class="glyphicon glyphicon-usd glyphSize"></span>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge" th:text="'$' + ${left}">$0</div>
@@ -60,7 +61,7 @@
 						<div class="panel-heading">
 							<div class="row">
 								<div class="col-xs-3">
-									<i class="fa fa-thumbs-down fa-5x"></i>
+									<span class="glyphicon glyphicon-thumbs-down glyphSize"></span>
 								</div>
 								<div class="col-xs-9 text-right">
 									<div class="huge" th:text="'$' + ${overBudget}">$0</div>
