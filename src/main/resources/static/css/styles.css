@@ -52,3 +52,21 @@ body {
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
+
+hr {
+  margin-top: 15px;
+  border: 0;
+  clear:both;
+  display:block;
+  width: 96%;               
+  background-color:#dcdee2;
+  height: 1px;
+}
+
+.spendingSummaryHeading {
+	font-size: 30px; font-weight: bold;
+}
+
+.spendingSummaryAmount {
+    font-size: 20px; font-weight: bold;
+}

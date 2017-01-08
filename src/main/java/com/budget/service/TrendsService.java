@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,20 +33,6 @@ public class TrendsService {
     
     @Autowired
     CurrentUserUtils currentUserFinder;
-    
-    private static final int JAN = 1;
-    private static final int FEB = 2;
-    private static final int MAR = 3;
-    private static final int APR = 4;
-    private static final int MAY = 5;
-    private static final int JUN = 6;
-    private static final int JUL = 7;
-    private static final int AUG = 8;
-    private static final int SEP = 9;
-    private static final int OCT = 10;
-    private static final int NOV = 11;
-    private static final int DEC = 12;
-    
 
     public GraphResponse getGraphData(String categoryName, int dateFrom) {
         
@@ -67,13 +54,19 @@ public class TrendsService {
         Map<String, Double> monthTotalExpense = initMonthTotalExpenseMap(numMonthsBack);
         
         for (Expense expense : expenses) {
-            String monthName = new SimpleDateFormat("MMMM").format(expense.getDate().getTime());
+            String monthName = new SimpleDateFormat("MMM YYYY").format(expense.getDate().getTime());
             double currentTotal = monthTotalExpense.get(monthName);
             monthTotalExpense.put(monthName, currentTotal + expense.getAmount());
         }
         
         GraphResponse response = new GraphResponse();
         response.setMonthTotals(monthTotalExpense);
+        response.setGrandTotal(this.getTotal(expenses));
+        String mostMonth = this.getMonthWithHighestExpense(monthTotalExpense);
+        String leastMonth = this.getMonthWithLowestExpense(monthTotalExpense);
+        response.setMostSpent(monthTotalExpense.get(mostMonth).intValue(), mostMonth);
+        response.setLeastSpent(monthTotalExpense.get(leastMonth).intValue(), leastMonth);
+        response.setAverage(this.getAverage(monthTotalExpense));
         
         
 //        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
@@ -84,13 +77,57 @@ public class TrendsService {
         
         return response;
     }
+    private String getMonthWithLowestExpense(Map<String, Double> monthTotalExpense) {
+        Entry<String, Double> randomEntry = monthTotalExpense.entrySet().iterator().next();
+
+        double lowestExpense = randomEntry.getValue();
+        String lowestExpenseMonth = randomEntry.getKey();
+
+        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
+            Double value = entry.getValue();
+            if (value < lowestExpense) {
+                lowestExpense = value;
+                lowestExpenseMonth = entry.getKey();
+            }
+        }
+        return lowestExpenseMonth;
+    }
+
+    private String getMonthWithHighestExpense(Map<String, Double> monthTotalExpense) {
+        double highestExpense = 0;
+        String highestExpenseMonth = null;
+        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
+            Double value = entry.getValue();
+            if (value > highestExpense) {
+                highestExpense = value;
+                highestExpenseMonth = entry.getKey();
+            }
+        }
+        return highestExpenseMonth;
+    }
+
+    private int getAverage(Map<String, Double> monthTotalExpense) {
+        double total = 0;
+        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
+            total +=  entry.getValue();        
+        }
+        return (int) (total / monthTotalExpense.size());
+    }
+
+    private double getTotal(List<Expense> expenses) {
+        double total = 0;
+        for (Expense expense : expenses) {
+            total += expense.getAmount();
+        }
+        return total;
+    }
     
     private Map<String, Double> initMonthTotalExpenseMap(int numMonthsBack) {
         Map<String, Double> monthExpenseTotal = new LinkedHashMap<>();
 
         Calendar cal = Calendar.getInstance();
         for (int i = numMonthsBack; i > 0; i--) {
-            monthExpenseTotal.put(new SimpleDateFormat("MMMM").format(cal.getTime()), 0.0);
+            monthExpenseTotal.put(new SimpleDateFormat("MMM YYYY").format(cal.getTime()), 0.0);
             cal.add(Calendar.MONTH, -1);
         }
         

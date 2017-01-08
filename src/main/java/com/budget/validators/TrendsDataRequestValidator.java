@@ -13,8 +13,6 @@ public class TrendsDataRequestValidator {
     CategoryService categoryService;
 
     public boolean validDataRequest(String categoryName, int dateFrom) {
-        System.out.println(categoryName);
-        System.out.println(dateFrom);
         if (dateFrom != 3 && dateFrom != 6 && dateFrom != 9 && dateFrom != 12) {
             return false;
         }
