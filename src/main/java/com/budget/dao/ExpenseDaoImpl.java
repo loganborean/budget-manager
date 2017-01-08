@@ -136,6 +136,9 @@ public class ExpenseDaoImpl implements ExpenseDao {
         } catch (DataAccessException ex) {
             ex.printStackTrace();
         }
+        if (expenses == null) {
+            return new ArrayList<Expense>();
+        }
        return expenses;
     }
     

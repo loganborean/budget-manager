@@ -2,6 +2,7 @@ package com.budget.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.budget.dao.UserDao;
@@ -23,6 +24,7 @@ public class UserService {
     }
 
     public void registerUser(User user) {
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userDao.insertUser(user);
         userDao.insertDefaultCategoriesForUser(
                 currentUserFinder.getCurrentUserByUsername(user.getUsername()));

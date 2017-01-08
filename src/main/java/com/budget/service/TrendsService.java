@@ -58,6 +58,7 @@ public class TrendsService {
             double currentTotal = monthTotalExpense.get(monthName);
             monthTotalExpense.put(monthName, currentTotal + expense.getAmount());
         }
+        int i = 0;
         
         GraphResponse response = new GraphResponse();
         response.setMonthTotals(monthTotalExpense);
@@ -67,13 +68,6 @@ public class TrendsService {
         response.setMostSpent(monthTotalExpense.get(mostMonth).intValue(), mostMonth);
         response.setLeastSpent(monthTotalExpense.get(leastMonth).intValue(), leastMonth);
         response.setAverage(this.getAverage(monthTotalExpense));
-        
-        
-//        for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
-//            String key = entry.getKey();
-//            Double value = entry.getValue();
-//            System.out.println(key + "   " + value);
-//        }
         
         return response;
     }
@@ -94,8 +88,10 @@ public class TrendsService {
     }
 
     private String getMonthWithHighestExpense(Map<String, Double> monthTotalExpense) {
-        double highestExpense = 0;
-        String highestExpenseMonth = null;
+        Entry<String, Double> randomEntry = monthTotalExpense.entrySet().iterator().next();
+
+        double highestExpense = randomEntry.getValue();
+        String highestExpenseMonth = randomEntry.getKey();
         for (Map.Entry<String, Double> entry : monthTotalExpense.entrySet()) {
             Double value = entry.getValue();
             if (value > highestExpense) {
