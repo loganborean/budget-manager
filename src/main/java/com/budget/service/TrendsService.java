@@ -137,7 +137,7 @@ public class TrendsService {
     
         Calendar cal = Calendar.getInstance();
         // add negative months to current month month to current month
-        cal.add(Calendar.MONTH, months);
+        cal.add(Calendar.MONTH, months+1);
         // set DATE to 1, so first date of X months ago
         cal.set(Calendar.DATE, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);

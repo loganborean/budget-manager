@@ -45,7 +45,8 @@
 				</button>
 			</a> 
 			<p style="font-size: 25px; font-style: italic; float: right">
-				<span th:text="'$' + ${categoryExpenseSummary[__${budgetItem.category.name}__].spent}"></span> of <span th:text="'$' + ${budgetItem.amount}">thing</span>
+				<span th:text="'$' + ${#numbers.formatDecimal(categoryExpenseSummary[__${budgetItem.category.name}__].spent, 0, 'COMMA', 2, 'POINT')}">
+				</span> of <span th:text="'$' + ${#numbers.formatDecimal(budgetItem.amount, 0, 'COMMA', 2, 'POINT')}">thing</span>
 			</p>
 			
 			
@@ -56,11 +57,23 @@
 					th:style="'width:' + ${categoryExpenseSummary[__${budgetItem.category.name}__].percentage} + '%'"></div>
 			</div>
 		</div>
+       <hr style="background-color: #fff"/>
+       <hr/>
 		<div th:if="not ${unbudgetedCategories.isEmpty()}">
 			<h3>Expenses Unbudgeted for:</h3>
-			<div th:each="instance : ${unbudgetedCategories}">
-				<p style="font-size: 20px" th:text="${instance.key.name} + ' :   $' + ${instance.value}">keyvalue</p>
-			</div>
+			<table class="table table-striped" style="width: 33%">
+				<tr>
+					<th>Category</th>
+					<th>Total Unbudgeted for</th>
+				</tr>
+				<tr th:each="instance : ${unbudgetedCategories}">
+
+					<td th:text="${instance.key.name}">category</td>
+					<td th:text="'$' + ${#numbers.formatDecimal(instance.value, 0, 'COMMA', 2, 'POINT')}">category</td>
+
+				<!-- <p style="font-size: 20px" th:text="${instance.key.name} + ' :   $' + ${instance.value}">keyvalue</p> -->
+				</tr>
+			</table>
 		</div>
 	</div>
 

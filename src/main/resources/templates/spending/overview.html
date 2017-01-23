@@ -19,7 +19,7 @@
                     <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
                 </div>
             </div>
-			<table class="table">
+			<table class="table table-striped">
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Category" disabled="disabled"/></th>
@@ -31,7 +31,7 @@
                 <tbody>
 					<tr th:each="expense : ${expenses}">
 					   <td th:text="${expense.category.name}">#</td>
-					   <td th:text="'$' + ${expense.amount}">#</td>
+					   <td th:text="'$' + ${#numbers.formatDecimal(expense.amount, 0, 'COMMA', 2, 'POINT')}">#</td>
 					   <td th:text="${expense.date}">#</td>
 					   <td th:text="${expense.note}">#</td>
 					   <td>
