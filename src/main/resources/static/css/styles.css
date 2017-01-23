@@ -6,6 +6,9 @@
 body {
     background-color: white;
 }
+.dropdown-backdrop{
+    position: static;
+}
 
 
    #wrapper {
