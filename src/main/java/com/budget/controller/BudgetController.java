@@ -48,7 +48,7 @@ public class BudgetController {
         model.addAttribute("categoryExpenseSummary", spendingService.getAllSpendingSummaries());
         return "budget/budget";
     }
-
+    
     @GetMapping(value = {"/budget/create"})
     public String createBudgetForm(Model model) {
         model.addAttribute("createBudgetForm", new BudgetItem());
@@ -57,7 +57,7 @@ public class BudgetController {
 
         return "budget/createBudget";
     }
-    
+
 
     @PostMapping(value = {"/budget/create"})
     public String createBudgetItem(@ModelAttribute("createBudgetForm")

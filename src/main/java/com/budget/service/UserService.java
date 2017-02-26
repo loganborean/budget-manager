@@ -10,6 +10,8 @@ import com.budget.entity.CreateUser;
 import com.budget.entity.User;
 import com.budget.utils.CurrentUserUtils;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Service
 public class UserService {
     
@@ -20,6 +22,9 @@ public class UserService {
     CurrentUserUtils currentUserFinder;
     
     public boolean isValidUser(User user) {
+        if (userDao == null) {
+            System.out.println("alsdjfkdf");
+        }
         return userDao.userExists(user);
     }
 

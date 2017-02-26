@@ -45,17 +45,17 @@
 				</button>
 			</a> 
 			<p style="font-size: 25px; font-style: italic; float: right">
-				<span th:text="'$' + ${#numbers.formatDecimal(categoryExpenseSummary[__${budgetItem.category.name}__].spent, 0, 'COMMA', 2, 'POINT')}">
+				<span th:text="'$' + ${#numbers.formatDecimal(categoryExpenseSummary['__${budgetItem.category.name}__'].spent, 0, 'COMMA', 2, 'POINT')}">
 				</span> of <span th:text="'$' + ${#numbers.formatDecimal(budgetItem.amount, 0, 'COMMA', 2, 'POINT')}">thing</span>
 			</p>
 			
 			
-			
-			<div class="progress progress-striped active" style="clear: both">
-				<div th:class="'progress-bar ' + ${categoryExpenseSummary[__${budgetItem.category.name}__].progressBarClass}" role="progressbar"
+			<div class="progress" style="clear: both">
+				<div th:class="'progress-bar ' + ${categoryExpenseSummary['__${budgetItem.category.name}__'].progressBarClass}" role="progressbar"
 					aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
-					th:style="'width:' + ${categoryExpenseSummary[__${budgetItem.category.name}__].percentage} + '%'"></div>
+					th:style="'width:' + ${categoryExpenseSummary['__${budgetItem.category.name}__'].percentage} + '%'"></div>
 			</div>
+
 		</div>
        <hr style="background-color: #fff"/>
        <hr/>

@@ -52,16 +52,6 @@ public class PagesController {
         
     }
 
-    @GetMapping(value = "/error")
-    public String error() {
-
-        return "errors/unauthorized";
-    }
-
-    @GetMapping(value = "/unauthorized")
-    public String unauthorized() {
-        return "errors/unauthorized";
-    }
     
     
 
