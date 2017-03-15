@@ -26,12 +26,37 @@ $(document).ready(function() {
 			dataType : 'json',
 			success : function(data) {
 				drawPieChart(data);
+				drawSpendingTable(data);
 			}
 		});
 		
 	});	
 });
 
+function drawSpendingTable(spendingData) {
+	
+	var expenseData = spendingData.expenses;
+	
+	var tableString = '';
+	
+	for (var i = 0; i < expenseData.length; i++) {
+		var amount = expenseData[i].amount;
+		var categoryName = expenseData[i].category.name;
+		var note = expenseData[i].note;
+		var date = expenseData[i].date;
+		
+		tableString += '<tr>';
+		tableString += '<td>' + categoryName + '</td>';
+		tableString += '<td>$ ' + amount + '</td>';
+		tableString += '<td>' + date + '</td>';
+		tableString += '<td>' + note + '</td>';
+		tableString += '</tr>';
+	}
+	var element = document.getElementById('spendingHistoryTableBody');
+	
+	element.innerHTML = tableString;
+	
+}
 
 function drawPieChart(respData) {
 
@@ -52,7 +77,7 @@ function drawPieChart(respData) {
 	var options = {
 	  title: 'Spending by Category',
 	  width: '100%',
-	  height: '100%'
+	  height: '300'
 	};
 
 	var element = document.getElementById('spendingHistoryPieChart');

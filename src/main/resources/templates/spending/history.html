@@ -11,8 +11,9 @@
 		<br/>
 		<a th:href="@{/spending}"><button class="btn btn-lg btn-danger">Back</button></a>
         <div th:each="monthItem : ${history}">
-			<div class="col-xs-2 well clickable" id="wellhover" style="margin-right: 10px; margin-top: 10px"
+			<div class="col-lg-3 col-md-4 well clickable" id="wellhover" style="margin-right: 10px; margin-top: 10px" 
 			     data-toggle="modal" data-target="#exampleModalLong">
+			
 				<p style="font-size: 1.3em" th:text="${monthItem.monthName}">default</p>
 				<p style="font-size: 1.3em" th:text="'Total: $' + ${#numbers.formatInteger(monthItem.totalSpending, 0, 'COMMA')}">default</p>
 			</div>
@@ -32,7 +33,31 @@
 		  <div class="modal-body">
 			  <div id="spendingHistoryPieChart"  style="">
 			  </div>
-			  <!-- <div id="spendingHistoryPieChart" class="col-xs-12" style="width: 100%; height: 500px; padding: 50px;"> </div> -->
+			  
+			  
+			<div class="panel panel-primary filterable">
+				<div class="panel-heading">
+					<h3 class="panel-title">Expenses</h3>
+					<div class="pull-right">
+						<button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+					</div>
+				</div>
+			  <table class="table table-striped">
+			  	<thead>
+			  		<tr class="filters">
+			  			<th><input type="text" class="form-control" placeholder="Category" disabled="disabled"/></th>
+			  			<th><input type="text" class="form-control" placeholder="Amount" disabled="disabled"/></th>
+			  			<th><input type="text" class="form-control" placeholder="Date" disabled="disabled"/></th>
+			  			<th><input type="text" class="form-control" placeholder="Note" disabled="disabled"/></th>
+			  		</tr>
+			  	</thead>
+			  	<tbody id="spendingHistoryTableBody">
+			  	
+			  	
+                </tbody>
+            </table>	
+			  	
+		  </div>
 		  </div>
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="func()">Close</button>
@@ -50,5 +75,6 @@
 	
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" th:src="@{/js/spendingHistory.js}"></script>
+<script type="text/javascript" th:src="@{/js/expenseFilter.js}"></script>
 </body>
 </html>
