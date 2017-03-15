@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.budget.UiEntity.SpendingHistoryItem;
 import com.budget.entity.Category;
 import com.budget.entity.Expense;
 import com.budget.entity.User;
@@ -50,6 +53,16 @@ public class ExpenseDaoImpl implements ExpenseDao {
                 return null;
             }
             return category;
+        }
+    }
+    class SpendingHistoryMapper implements RowMapper<SpendingHistoryItem> {
+
+        @Override
+        public SpendingHistoryItem mapRow(ResultSet rs, int rowNum) throws SQLException {
+            SpendingHistoryItem spendingHistoryItem = new SpendingHistoryItem();
+            spendingHistoryItem.setTotalSpending((int)rs.getDouble("total"));
+            spendingHistoryItem.setMonthName(rs.getDate(("monthYear")));
+            return spendingHistoryItem;
         }
     }
 
@@ -140,6 +153,81 @@ public class ExpenseDaoImpl implements ExpenseDao {
             return new ArrayList<Expense>();
         }
        return expenses;
+    }
+
+    @Override
+    public List<Expense> getAllExpensesForUser(User currentUser) {
+        String sql = "SELECT * FROM expense "
+                   + " WHERE user_id = ? ";
+        List<Expense> expenses = null;
+        try {
+            expenses = jdbcTemp.query(sql,
+                         new Object[]{currentUser.getId()},
+                         new ExpenseRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return new ArrayList<Expense>();
+        }
+        return expenses;
+        
+    }
+
+    @Override
+    public List<SpendingHistoryItem> getExpenseMonthSummary(User currentUser) {
+        String sql = "SELECT SUM(amount) AS total, "
+                   + " DATE_FORMAT(date, '%Y-%m-01') AS monthYear "
+                   + " FROM expense "
+                   + " WHERE user_id = ? "
+                   + " GROUP BY DATE_FORMAT(date, '%Y-%m-01')"
+                   + " ORDER BY monthYear DESC";
+
+        List<SpendingHistoryItem> spendingHistory = null;
+        try {
+            spendingHistory = jdbcTemp.query(sql,
+                              new Object[]{currentUser.getId()},
+                              new SpendingHistoryMapper());
+            
+        } catch (DataAccessException ex) {
+            return new ArrayList<SpendingHistoryItem>();
+        }
+        return spendingHistory;
+    }
+
+    @Override
+    public boolean userHasExpenseForDate(User currentUser, int month, int year) {
+        String sql = "SELECT * FROM expense "
+                   + " WHERE user_id = ? "
+                   + " AND MONTH(date) = ?"
+                   + " AND YEAR(date) = ?";
+        
+        try {
+            jdbcTemp.query(sql, new Object[]{currentUser.getId(), month, year},
+                           new ExpenseRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public List<Expense> getExpensesFromMonthYear(User currentUser, int month, int year) {
+        String sql = "SELECT * FROM expense "
+                   + " WHERE user_id = ? "
+                   + " AND MONTH(date) = ?"
+                   + " AND YEAR(date) = ?";
+        
+        List<Expense> expenses = null;
+        try {
+            expenses = jdbcTemp.query(sql, new Object[]{currentUser.getId(), month, year},
+                                     new ExpenseRowMapper());
+            
+        } catch (DataAccessException ex) {
+            return new ArrayList<Expense>();
+        }
+
+        return expenses;
     }
     
 }

@@ -16,7 +16,7 @@ import com.budget.UiEntity.GraphResponse;
 import com.budget.service.BudgetItemService;
 import com.budget.service.CategoryService;
 import com.budget.service.TrendsService;
-import com.budget.validators.TrendsDataRequestValidator;
+import com.budget.validators.AjaxDataRequestValidator;
 
 @Controller
 public class TrendsController {
@@ -28,7 +28,7 @@ public class TrendsController {
     private TrendsService trendsService;
 
     @Autowired
-    private TrendsDataRequestValidator validator;
+    private AjaxDataRequestValidator validator;
 
     @Autowired
     private CategoryService categoryService;

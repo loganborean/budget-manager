@@ -22,3 +22,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+
+budget_item.sql
+/src/main/resources$ application.properties

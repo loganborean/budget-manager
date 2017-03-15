@@ -1,12 +1,16 @@
 package com.budget.service;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.budget.UiEntity.MonthSpendingHistoryResponse;
+import com.budget.UiEntity.SpendingHistoryItem;
 import com.budget.UiEntity.SpendingSummary;
 import com.budget.dao.ExpenseDao;
 import com.budget.entity.BudgetItem;
@@ -137,14 +143,61 @@ public class SpendingService {
         }
     }
 
+    public List<SpendingHistoryItem> getSpendingHistoryForCurrentUser() {
+        User currentUser = currentUserFinder.getCurrentUser();
+        List<SpendingHistoryItem> allUsersExpenses = expenseDao.getExpenseMonthSummary(currentUser);
+        
+        return allUsersExpenses;
+    }
+
+    public boolean userHasExpensesThisMonthAndYear(String monthYear) {
+        User currentUser = currentUserFinder.getCurrentUser();
+        Date date = getDateFromMonthYearStr(monthYear);
+        return expenseDao.userHasExpenseForDate(currentUser,
+                                                getMonth(date),
+                                                getYear(date));
+    }
     
-    
-    
-    
-    
-    
-    
-    
+
+    public MonthSpendingHistoryResponse makeMonthSpendingHistoryResponse(String monthYear) {
+        User currentUser = currentUserFinder.getCurrentUser();
+        Date date = getDateFromMonthYearStr(monthYear);
+        List<Expense> specifiedMonthYearExpenses = 
+                expenseDao.getExpensesFromMonthYear(currentUser,
+                                                    getMonth(date),
+                                                    getYear(date));
+        MonthSpendingHistoryResponse response = new MonthSpendingHistoryResponse();
+        return response.createResponse(specifiedMonthYearExpenses);
+    }
+
+    private Date getDateFromMonthYearStr(String monthYear) {
+        SimpleDateFormat fmt = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+        Date date = null;
+        try {
+             date = fmt.parse(monthYear);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    private int getMonth(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int month = cal.get(Calendar.MONTH);
+        // calendar is 0 based (january is 0) for some reason.
+        // mysql needs it to start from 1
+        month += 1;
+        return month;
+
+        
+    }
+    private int getYear(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        return year;
+    }
     
     
 
